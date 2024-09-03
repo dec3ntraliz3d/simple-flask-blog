@@ -1,0 +1,113 @@
+/* General styles */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.container {
+    width: 100%;
+}
+
+/* Header styles */
+header {
+    background-color: #f4f4f4;
+    padding: 1rem;
+    margin-bottom: 2rem;
+}
+
+.centered-heading {
+    text-align: center;
+}
+
+nav {
+    text-align: center;
+    margin-top: 1rem;
+}
+
+nav a {
+    color: #333;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+}
+
+nav a:hover {
+    background-color: #ddd;
+}
+
+/* Main content styles */
+.main {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Posts list styles */
+.posts-list h2 {
+    margin-bottom: 1rem;
+}
+
+.post-items {
+    list-style-type: none;
+    padding: 0;
+}
+
+.post-item {
+    margin-bottom: 1rem;
+}
+
+.post-item a {
+    color: #007bff;
+    text-decoration: none;
+    font-size: 1.1rem;
+}
+
+.post-item a:hover {
+    text-decoration: underline;
+}
+
+.no-posts {
+    font-style: italic;
+    color: #666;
+}
+
+/* Individual post styles */
+.post-content {
+    line-height: 1.8;
+}
+
+/* Back to Home link */
+a[href="{{ url_for('index') }}"] {
+    display: inline-block;
+    margin-top: 2rem;
+    color: #007bff;
+    text-decoration: none;
+}
+
+a[href="{{ url_for('index') }}"]:hover {
+    text-decoration: underline;
+}
+
+/* Back to Home link styles */
+.back-link {
+    display: inline-block;
+    color: #007bff;
+    text-decoration: none;
+    margin: 1rem 0;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+.top-link {
+    margin-bottom: 2rem;
+}
+
+.bottom-link {
+    margin-top: 2rem;
+}

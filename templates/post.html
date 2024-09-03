@@ -1,0 +1,7 @@
+{% extends 'base.html' %} {% block content %}
+<div class="main">
+
+  <div class="post-content">{{ content | safe }}</div>
+  <a href="{{ url_for('index') }}" class="back-link bottom-link">Back to Home</a>
+</div>
+{% endblock %}
