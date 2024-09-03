@@ -3,10 +3,6 @@
 
 # Environment variables
 .env
-
-# Pip requirements (except the main one)
-requirements*.txt
-
 # Test cache files
 .pytest_cache/
 .coverage
