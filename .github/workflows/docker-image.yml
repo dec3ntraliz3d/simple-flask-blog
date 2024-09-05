@@ -2,14 +2,12 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -17,6 +15,6 @@ jobs:
       - name: Build the Docker image
         run: docker build . --file Dockerfile --tag dec3ntraliz3d/blog:latest
       - name: Log in to Docker Hub
-        run: docker login --username ${{ secrets.DOCKERHUB_USERNAME }} --password ${{ secrets.DOCKERHUB_PASSWORD }}
+        run: docker login --username ${{ secrets.DOCKER_HUB_USERNAME }} --password ${{ secrets.DOCKER_HUB_PASSWORD }}
       - name: Push the Docker image to Docker Hub
         run: docker push dec3ntraliz3d/blog:latest
