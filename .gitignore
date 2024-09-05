@@ -1,8 +1,8 @@
 #virtual env files
 .venv/
-
 # Environment variables
 .env
 # Test cache files
-.pytest_cache/
+__pytest_cache__/
+__pycache__/
 .coverage
