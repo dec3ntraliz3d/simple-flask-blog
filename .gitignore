@@ -1,8 +1,18 @@
-#virtual env files
+# Virtual environment files
 .venv/
+
 # Environment variables
 .env
+
 # Test cache files
 __pytest_cache__/
 __pycache__/
 .coverage
+
+# Terraform local files
+terraform/.terraform/
+terraform/terraform.tfstate
+terraform/terraform.tfstate.backup
+
+# Docker cache
+.docker/
