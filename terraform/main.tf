@@ -7,7 +7,7 @@ provider "aws" {
 # Create a key pair for the EC2 instance
 resource "aws_key_pair" "ec2_key_pair" {
   key_name   = "ec2_key_pair"
-  public_key = file("id_rsa.pub")
+  public_key = ${{secrets.PUBLIC_KEY}}
 }
 
 # Retrieve the latest Ubuntu 20.04 AMI
