@@ -3,3 +3,10 @@ variable "instance_type" {
   type        = string
   default     = "t2.micro"
 }
+
+variable "public_key" {
+  description = "The public key for the EC2 instance"
+  type        = string
+ 
+}
+

@@ -25,6 +25,8 @@ jobs:
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
           aws-region: us-east-1
+      - name: Set public key
+        run: echo "TF_VAR_public_key=${{ secrets.PUBLIC_KEY }}" >> $GITHUB_ENV
       - name: Initialize Terraform
         run: terraform init
       - name: Validate Terraform code
