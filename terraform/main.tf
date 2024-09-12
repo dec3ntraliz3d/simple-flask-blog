@@ -1,8 +1,4 @@
 
-# Define the provider and region
-provider "aws" {
-  region = "us-east-1"
-}
 
 # Create a key pair for the EC2 instance
 resource "aws_key_pair" "ec2_key_pair" {

@@ -7,6 +7,5 @@ variable "instance_type" {
 variable "public_key" {
   description = "The public key for the EC2 instance"
   type        = string
- 
 }
 
