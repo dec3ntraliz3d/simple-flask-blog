@@ -1,4 +1,4 @@
-# Use dynamodb for locking
+
 terraform {
   backend "s3" {
     bucket = "codebuff-terraform-state-bucket"
