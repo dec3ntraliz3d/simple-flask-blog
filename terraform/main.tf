@@ -6,6 +6,7 @@ resource "aws_key_pair" "ec2_key_pair" {
   public_key = var.public_key
   tags = {
     Environment = "dev"
+  }
 }
 
 # Retrieve the latest Ubuntu 20.04 AMI
