@@ -23,3 +23,5 @@ terraform-main/.terraform.lock.hcl
 
 # Docker cache
 .docker/
+
+.bak

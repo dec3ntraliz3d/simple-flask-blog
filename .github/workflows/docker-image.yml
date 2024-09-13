@@ -1,18 +1,21 @@
-name: Docker Image CI
-# disable this workflow when pushing to main
+name: Build Docker Image
+
 on:
-  workflow_dispatch:
   push:
     branches: ["main"]
   pull_request:
     branches: ["main"]
-
+  paths:
+    - posts/**
+    - Dockerfile
+    - .dockerignore
+    - static/**
+    - templates/**
+    - requirements.txt
+    - app.py
 jobs:
-  
   build:
-    if: false
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
       - name: Build the Docker image
