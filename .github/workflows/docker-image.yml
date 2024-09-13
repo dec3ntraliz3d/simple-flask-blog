@@ -3,16 +3,24 @@ name: Build Docker Image
 on:
   push:
     branches: ["main"]
+    paths:
+      - posts/**
+      - Dockerfile
+      - .dockerignore
+      - static/**
+      - templates/**
+      - requirements.txt
+      - app.py
   pull_request:
     branches: ["main"]
-paths:
-  - posts/**
-  - Dockerfile
-  - .dockerignore
-  - static/**
-  - templates/**
-  - requirements.txt
-  - app.py
+    paths:
+      - posts/**
+      - Dockerfile
+      - .dockerignore
+      - static/**
+      - templates/**
+      - requirements.txt
+      - app.py
 jobs:
   build:
     runs-on: ubuntu-latest
