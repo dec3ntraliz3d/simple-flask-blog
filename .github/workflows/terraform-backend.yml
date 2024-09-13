@@ -1,0 +1,41 @@
+name: Terraform Backend
+# disable this workflow when pushing to main
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+permissions:
+  # This is required for requesting the JWT for connecting to aws.
+  id-token: write
+  contents: read
+jobs:
+  terraform-backend:
+    if: false
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Configure AWS credentials
+        # https://github.com/aws-actions/configure-aws-credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+          aws-region: us-east-1
+      - name: Initialize Terraform
+        run: terraform init
+      - name: Validate Terraform code
+        run: terraform validate
+      - name: Plan Terraform changes
+        run: terraform plan
+      - name: Apply Terraform changes
+        run: terraform apply -auto-approve
+
+  terraform-main:
+
+
+
+

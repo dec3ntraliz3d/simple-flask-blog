@@ -1,12 +1,15 @@
 name: Docker Image CI
-
+# disable this workflow when pushing to main
 on:
+  workflow_dispatch:
   push:
     branches: ["main"]
   pull_request:
     branches: ["main"]
 
 jobs:
+
+  if: false
   build:
     runs-on: ubuntu-latest
 

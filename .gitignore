@@ -10,10 +10,16 @@ __pycache__/
 .coverage
 
 # Terraform local files
-terraform/.terraform/
-terraform/terraform.tfstate
-terraform/terraform.tfstate.backup
-terraform/.terraform.lock.hcl
+terraform-backend/.terraform/
+terraform-backend/terraform.tfstate
+terraform-backend/terraform.tfstate.backup
+terraform-backend/.terraform.lock.hcl
+
+# same for terraform-main
+terraform-main/.terraform/
+terraform-main/terraform.tfstate
+terraform-main/terraform.tfstate.backup
+terraform-main/.terraform.lock.hcl
 
 # Docker cache
 .docker/
