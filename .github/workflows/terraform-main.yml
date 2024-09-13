@@ -17,7 +17,6 @@ permissions:
   contents: read
 jobs:
   terraform:
-    if: false
     runs-on: ubuntu-latest
     defaults:
       run:
