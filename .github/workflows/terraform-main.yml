@@ -41,6 +41,10 @@ jobs:
         run: terraform output ec2_public_dns >> ec2_public_dns.txt
       - name: check if ec2_public_dns.txt exists
         run: ls -l ec2_public_dns.txt
+      - name: Debug current directory
+        run: |
+          pwd
+          ls -l
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
