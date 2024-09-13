@@ -1,7 +1,6 @@
-name: Terraform Backend
-# disable this workflow when pushing to main
+name: Terraform Main
+
 on:
-  workflow_dispatch:
   push:
     branches:
       - main
@@ -13,9 +12,12 @@ permissions:
   id-token: write
   contents: read
 jobs:
-  terraform-backend:
+  terraform:
     if: false
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./terraform-main
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -25,6 +27,8 @@ jobs:
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
           aws-region: us-east-1
+      - name: Set public key
+        run: echo "TF_VAR_public_key=${{ secrets.PUBLIC_KEY }}" >> $GITHUB_ENV
       - name: Initialize Terraform
         run: terraform init
       - name: Validate Terraform code
@@ -33,8 +37,6 @@ jobs:
         run: terraform plan
       - name: Apply Terraform changes
         run: terraform apply -auto-approve
-
-  terraform-main:
 
 
 
