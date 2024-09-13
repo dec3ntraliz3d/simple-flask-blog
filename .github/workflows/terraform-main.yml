@@ -5,6 +5,7 @@ on:
     branches:
       - main
   pull_request:
+
     branches:
       - main
 permissions:
@@ -34,8 +35,16 @@ jobs:
         run: terraform validate
       - name: Plan Terraform changes
         run: terraform plan
-      # - name: Apply Terraform changes
-      #   run: terraform apply -auto-approve
+      - name: Apply Terraform changes
+        run: terraform apply -auto-approve
+      - name: Output EC2 Public IP
+        run: terraform output ec2_public_dns >> ec2_public_dns.txt
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ec2_public_dns
+          path: ec2_public_dns.txt
+
 
 
 
