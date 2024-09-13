@@ -39,17 +39,15 @@ jobs:
         run: terraform apply -auto-approve
       - name: Output EC2 Public IP
         run: terraform output ec2_public_dns >> ec2_public_dns.txt
-      - name: check if ec2_public_dns.txt exists
-        run: ls -l ./ec2_public_dns.txt
-      - name: Debug current directory
-        run: |
-          pwd
-          ls -l
+        # Note when actions are used with `uses` they use base directory instead of working directory
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
           name: ec2_public_dns
           path: terraform-main/ec2_public_dns.txt
+      # Temporarily destroy the infrastructure
+      - name: Destroy Terraform changes
+        run: terraform destroy -auto-approve
 
 
 
