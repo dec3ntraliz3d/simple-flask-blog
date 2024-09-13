@@ -1,0 +1,6 @@
+terraform-main/
+terraform-backend/
+
+.gitignore
+.github/
+
