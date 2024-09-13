@@ -16,8 +16,8 @@ permissions:
   contents: read
 
 jobs:
-  if: false
   terraform-backend:
+    if: false
     runs-on: ubuntu-latest
     defaults:
       run:
