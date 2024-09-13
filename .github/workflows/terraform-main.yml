@@ -49,7 +49,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: ec2_public_dns
-          path: ec2_public_dns.txt
+          path: ./ec2_public_dns.txt
 
 
 
