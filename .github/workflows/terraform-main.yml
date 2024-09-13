@@ -40,7 +40,7 @@ jobs:
       - name: Output EC2 Public IP
         run: terraform output ec2_public_dns >> ec2_public_dns.txt
       - name: check if ec2_public_dns.txt exists
-        run: ls -l ec2_public_dns.txt
+        run: ls -l ./ec2_public_dns.txt
       - name: Debug current directory
         run: |
           pwd
@@ -49,7 +49,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: ec2_public_dns
-          path: ./ec2_public_dns.txt
+          path: terraform-main/ec2_public_dns.txt
 
 
 
