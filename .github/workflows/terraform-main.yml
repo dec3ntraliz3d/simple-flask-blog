@@ -2,13 +2,11 @@ name: Terraform Main
 
 on:
   push:
-    paths:
-      - 'terraform-main/**'
+ 
     branches:
       - main
   pull_request:
-    paths:
-      - 'terraform-main/**'
+ 
     branches:
       - main
 permissions:
@@ -16,7 +14,7 @@ permissions:
   id-token: write
   contents: read
 jobs:
-  terraform:
+  terraform-main:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -38,8 +36,8 @@ jobs:
         run: terraform validate
       - name: Plan Terraform changes
         run: terraform plan
-      - name: Apply Terraform changes
-        run: terraform apply -auto-approve
+      # - name: Apply Terraform changes
+      #   run: terraform apply -auto-approve
 
 
 
