@@ -2,11 +2,11 @@ name: Terraform Main
 
 on:
   push:
-    paths: terraform-main/**
+    # paths: terraform-main/**
     branches:
       - main
   pull_request:
-    paths: terraform-main/**
+    # paths: terraform-main/**
     branches:
       - main
 permissions:
