@@ -2,10 +2,11 @@ name: Terraform Main
 
 on:
   push:
+    paths: terraform-main/**
     branches:
       - main
   pull_request:
-
+    paths: terraform-main/**
     branches:
       - main
 permissions:
@@ -46,8 +47,8 @@ jobs:
           name: ec2_public_dns
           path: terraform-main/ec2_public_dns.txt
       # Temporarily destroy the infrastructure
-      - name: Destroy Terraform changes
-        run: terraform destroy -auto-approve
+      # - name: Destroy Terraform changes
+      #   run: terraform destroy -auto-approve
 
 
 
