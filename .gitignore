@@ -9,19 +9,21 @@ __pytest_cache__/
 __pycache__/
 .coverage
 
-# Terraform local files
+# Terraform backend files
 terraform-backend/.terraform/
 terraform-backend/terraform.tfstate
 terraform-backend/terraform.tfstate.backup
 terraform-backend/.terraform.lock.hcl
+terraform-backend/terraform.tfvars
 
 # same for terraform-main
 terraform-main/.terraform/
 terraform-main/terraform.tfstate
 terraform-main/terraform.tfstate.backup
 terraform-main/.terraform.lock.hcl
+terraform-main/terraform.tfvars
 
 # Docker cache
 .docker/
 
-.bak
+*.bak

@@ -55,11 +55,11 @@ resource "aws_vpc_security_group_egress_rule" "allow_all_traffic_ipv4" {
 
 # Create an EC2 instance
 resource "aws_instance" "ec2_instance" {
-  ami           = data.aws_ami.ubuntu.id
-  instance_type = var.instance_type
-  key_name = aws_key_pair.ec2_key_pair.key_name
+  ami                    = data.aws_ami.ubuntu.id
+  instance_type          = var.instance_type
+  key_name               = aws_key_pair.ec2_key_pair.key_name
   vpc_security_group_ids = [aws_security_group.allow_ssh_http.id]
-  user_data = <<-EOF
+  user_data              = <<-EOF
               #!/bin/bash
               apt-get update
               apt-get install ca-certificates curl
@@ -75,6 +75,6 @@ resource "aws_instance" "ec2_instance" {
               usermod -aG docker ubuntu
               docker run -d -p 80:5000 --name "blog" dec3ntraliz3d/blog:latest
               EOF
-}   
+}
 
 
