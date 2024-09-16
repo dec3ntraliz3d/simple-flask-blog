@@ -46,7 +46,7 @@ jobs:
         with:
           name: ec2_public_dns
           path: terraform-main/ec2_public_dns.txt
-      # Temporarily destroy the infrastructure
+   
       # - name: Destroy Terraform changes
       #   run: terraform destroy -auto-approve
 
