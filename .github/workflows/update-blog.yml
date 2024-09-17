@@ -16,7 +16,7 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            const workflow_name = 'Terraform Deploy';
+            const workflow_name = 'Terraform Main';
             const { owner, repo } = context.repo;
             const { data: workflows } = await github.rest.actions.listRepoWorkflows({ owner, repo });
             const terraform_workflow = workflows.workflows.find(w => w.name === workflow_name);
