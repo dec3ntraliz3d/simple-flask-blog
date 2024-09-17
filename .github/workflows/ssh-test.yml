@@ -1,0 +1,21 @@
+name: SSH Test
+
+on: 
+    push:
+        branches: [main]
+
+jobs:
+    ssh:
+        runs-on: ubuntu-latest
+        steps: 
+            - name: Login to ec2
+              uses: appleboy/ssh-action@v1.0.3
+              with:
+                host: 174.129.69.66
+                username: ${{ secrets.USERNAME }}
+                key: ${{ secrets.PRIVATE_KEY }}
+                script: |
+                    whoami
+
+
+
