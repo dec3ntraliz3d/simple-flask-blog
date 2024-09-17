@@ -1,12 +1,10 @@
 name: Update Blog
-
 on:
- workflow_run:
-   workflows: [Docker Build]
-   types: [completed]
+  workflow_run:
+    workflows: [Docker Build]
+    types: [completed]
 jobs:
   deploy:
-    
     runs-on: ubuntu-latest
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
@@ -20,11 +18,11 @@ jobs:
             const { owner, repo } = context.repo;
             const { data: workflows } = await github.rest.actions.listRepoWorkflows({ owner, repo });
             const terraform_workflow = workflows.workflows.find(w => w.name === workflow_name);
-          
+            
             if (!terraform_workflow) {
               throw new Error(`Workflow "${workflow_name}" not found`);
             }
-          
+            
             const { data: { workflow_runs } } = await github.rest.actions.listWorkflowRuns({
               owner,
               repo,
@@ -33,26 +31,32 @@ jobs:
               branch: context.ref.replace('refs/heads/', ''),
               per_page: 1
             });
-          
+            
             if (workflow_runs.length === 0) {
               throw new Error('No successful Terraform workflow runs found');
             }
-          
+            
             console.log(`Latest Terraform run ID: ${workflow_runs[0].id}`);
             return workflow_runs[0].id;
 
       - name: Get EC2 Public IP
         uses: actions/download-artifact@v4
         with:
-          # Changing to IP. DNS may not be setup .
           name: ec2_public_ip
           github-token: ${{secrets.GITHUB_TOKEN}}
           run-id: ${{ steps.get-terraform-run.outputs.result }}
-        
+
+      - name: Read and Debug EC2 Public IP
+        id: read-ip
+        run: |
+          EC2_IP=$(cat ec2_public_ip.txt)
+          echo "ec2_ip=${EC2_IP}" >> $GITHUB_OUTPUT
+          echo "EC2 Public IP: ${EC2_IP}"
+
       - name: SSH to EC2 and Deploy new docker container
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: $(cat ec2_public_ip.txt)
+          host: ${{ steps.read-ip.outputs.ec2_ip }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.PRIVATE_KEY }}
           script: |
@@ -61,7 +65,3 @@ jobs:
             fi
             docker rm blog
             docker run -d -p 80:5000 --name "blog" dec3ntraliz3d/blog:latest
-
-
-
-
