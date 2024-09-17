@@ -6,5 +6,4 @@
 
 ### Docker has been updated if you see this !
 
-# Wahoooooo
-## Wahoooo
+# Finally Wahoo
