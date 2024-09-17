@@ -51,6 +51,10 @@ jobs:
       - name: Put EC2 Public IP in env variable
         run: |
           echo "ec2_public_ip=$(cat ec2_public_ip.txt)" >> $GITHUB_ENV
+      - name: Debug EC2 IP
+        run: |
+          echo "EC2 Public IP: ${{ env.ec2_public_ip }}"
+        
       - name: SSH to EC2 and Deploy new docker container
         uses: appleboy/ssh-action@v1.0.3
         with:
