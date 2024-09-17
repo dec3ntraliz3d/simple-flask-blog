@@ -38,14 +38,14 @@ jobs:
         run: terraform plan
       - name: Apply Terraform changes
         run: terraform apply -auto-approve
-      - name: Output EC2 Public DNS
-        run: terraform output ec2_public_dns >> ec2_public_dns.txt
+      - name: Output EC2 Public IP
+        run: terraform output ec2_public_ip >> ec2_public_ip.txt
         # Note when actions are used with `uses` they use base directory instead of working directory
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ec2_public_dns
-          path: terraform-main/ec2_public_dns.txt
+          name: ec2_public_ip
+          path: terraform-main/ec2_public_ip.txt
           overwrite: true 
    
       # - name: Destroy Terraform changes

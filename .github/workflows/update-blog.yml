@@ -41,19 +41,20 @@ jobs:
             console.log(`Latest Terraform run ID: ${workflow_runs[0].id}`);
             return workflow_runs[0].id;
 
-      - name: Get EC2 Public DNS
+      - name: Get EC2 Public IP
         uses: actions/download-artifact@v4
         with:
-          name: ec2_public_dns
+          # Changing to IP. DNS may not be setup .
+          name: ec2_public_ip
           github-token: ${{secrets.GITHUB_TOKEN}}
           run-id: ${{ steps.get-terraform-run.outputs.result }}
-      - name: Put EC2 Public DNS in env variable
+      - name: Put EC2 Public IP in env variable
         run: |
-          echo "ec2_public_dns=$(cat ec2_public_dns.txt)" >> $GITHUB_ENV
+          echo "ec2_public_ip=$(cat ec2_public_ip.txt)" >> $GITHUB_ENV
       - name: SSH to EC2 and Deploy new docker container
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: ${{env.ec2_public_dns}}
+          host: ${{env.ec2_public_ip}}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.PRIVATE_KEY }}
           script: |
