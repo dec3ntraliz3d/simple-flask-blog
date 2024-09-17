@@ -38,7 +38,7 @@ jobs:
         run: terraform plan
       - name: Apply Terraform changes
         run: terraform apply -auto-approve
-      - name: Output EC2 Public IP
+      - name: Output EC2 Public DNS
         run: terraform output ec2_public_dns >> ec2_public_dns.txt
         # Note when actions are used with `uses` they use base directory instead of working directory
       - name: Upload artifact
