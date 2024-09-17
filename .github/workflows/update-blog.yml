@@ -10,10 +10,43 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
+      - name: Get Terraform workflow run_id
+        id: get-terraform-run
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            const workflow_name = 'Terraform Deploy';
+            const { owner, repo } = context.repo;
+            const { data: workflows } = await github.rest.actions.listRepoWorkflows({ owner, repo });
+            const terraform_workflow = workflows.workflows.find(w => w.name === workflow_name);
+          
+            if (!terraform_workflow) {
+              throw new Error(`Workflow "${workflow_name}" not found`);
+            }
+          
+            const { data: { workflow_runs } } = await github.rest.actions.listWorkflowRuns({
+              owner,
+              repo,
+              workflow_id: terraform_workflow.id,
+              status: 'success',
+              branch: context.ref.replace('refs/heads/', ''),
+              per_page: 1
+            });
+          
+            if (workflow_runs.length === 0) {
+              throw new Error('No successful Terraform workflow runs found');
+            }
+          
+            console.log(`Latest Terraform run ID: ${workflow_runs[0].id}`);
+            return workflow_runs[0].id;
+
       - name: Get EC2 Public DNS
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: ec2_public_dns
+          token-id: ${{secrets.GITHUB_TOKEN}}
+          run-id: ${{ steps.get-terraform-run.outputs.result }}
       - name: Put EC2 Public DNS in env variable
         run: |
           echo "ec2_public_dns=$(cat ec2_public_dns.txt)" >> $GITHUB_ENV
