@@ -61,8 +61,8 @@ jobs:
               docker stop blog
             fi
             docker rm blog
+            docker images | grep dec3ntraliz3d/blog | awk '{print $3}' | xargs docker rmi -f
             docker run -d -p 80:5000 --name "blog" dec3ntraliz3d/blog:latest
-
 
 
 
