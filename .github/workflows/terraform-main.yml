@@ -1,5 +1,4 @@
 name: Terraform Main
-
 on:
   push:
     # paths: '**.tf'
