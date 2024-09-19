@@ -6,12 +6,7 @@ on:
         working_directory:
             type: string
             required: true
-    secrets:
-        AWS_ROLE_TO_ASSUME:
-            required: true
-        PUBLIC_KEY:
-            required: true
-  
+
 permissions:
   # This is required for requesting the JWT for connecting to aws.
   id-token: write
