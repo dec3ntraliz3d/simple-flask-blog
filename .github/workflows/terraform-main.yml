@@ -14,7 +14,7 @@ permissions:
   id-token: write
   contents: read
 jobs:
-  terraform:
+  terraform-main:
     uses: ./.github/workflows/terraform.yml
     with:
       working_directory : ./terraform-main

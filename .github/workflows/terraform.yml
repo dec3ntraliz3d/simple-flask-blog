@@ -1,23 +1,28 @@
 name: Terraform
-
 on:
   workflow_call:
     inputs:
         working_directory:
             type: string
             required: true
+    outputs:
+        ec2_public_ip:
+            description: EC2 public IP address 
+            value: ${{jobs.terraform.outputs.ec2-public-ip}}
 
 permissions:
-  # This is required for requesting the JWT for connecting to aws.
+  # This is required for requesting the JWT for connecting to aws..
   id-token: write
   contents: read
 
 jobs:
-  terraform-main:
+  terraform:
     runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: ${{inputs.working_directory}}  # Set working directory for main
+    outputs:
+        ec2-public-ip: ${{steps.ec2-public-ip.outputs.ec2-public-ip}}  
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -38,14 +43,16 @@ jobs:
       - name: Apply Terraform changes
         run: terraform apply -auto-approve
       - name: Output EC2 Public IP
-        run: terraform output -raw ec2_public_ip >> ec2_public_ip.txt
+        id: ec2-public-ip
+        run: |
+          echo "ec2-public-ip=$(terraform output -raw ec2_public_ip)" >> $GITHUB_OUTPUT
         # Note when actions are used with `uses` they use base directory instead of working directory
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: ec2_public_ip
-          path: terraform-main/ec2_public_ip.txt
-          overwrite: true 
+    #   - name: Upload artifact
+    #     uses: actions/upload-artifact@v4
+    #     with:
+    #       name: ec2_public_ip
+    #       path: terraform-main/ec2_public_ip.txt
+    #       overwrite: true 
 
 
 
