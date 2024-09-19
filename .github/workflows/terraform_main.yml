@@ -9,10 +9,10 @@ on:
     paths: '**.tf'
     branches:
       - main
-permissions:
-  # This is required for requesting the JWT for connecting to aws.
-  id-token: write
-  contents: read
+# permissions:
+#   # This is required for requesting the JWT for connecting to aws.
+#   id-token: write
+#   contents: read
 jobs:
   terraform-main:
     uses: ./.github/workflows/terraform.yml
