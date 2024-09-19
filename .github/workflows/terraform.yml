@@ -1,0 +1,60 @@
+name: Terraform
+
+on:
+  workflow_call:
+    inputs:
+        working_directory:
+            type: string
+            required: true
+    secrets:
+        AWS_ROLE_TO_ASSUME:
+            required: true
+        PUBLIC_KEY:
+            required: true
+  
+permissions:
+  # This is required for requesting the JWT for connecting to aws.
+  id-token: write
+  contents: read
+
+jobs:
+  terraform-main:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{inputs.working_directory}}  # Set working directory for main
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Configure AWS credentials
+        # https://github.com/aws-actions/configure-aws-credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+          aws-region: us-east-1
+      - name: Set public key
+        run: echo "TF_VAR_public_key=${{ secrets.PUBLIC_KEY }}" >> $GITHUB_ENV
+      - name: Initialize Terraform
+        run: terraform init
+      - name: Validate Terraform code
+        run: terraform validate
+      - name: Plan Terraform changes
+        run: terraform plan
+      - name: Apply Terraform changes
+        run: terraform apply -auto-approve
+      - name: Output EC2 Public IP
+        run: terraform output -raw ec2_public_ip >> ec2_public_ip.txt
+        # Note when actions are used with `uses` they use base directory instead of working directory
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ec2_public_ip
+          path: terraform-main/ec2_public_ip.txt
+          overwrite: true 
+
+
+
+
+
+
+
