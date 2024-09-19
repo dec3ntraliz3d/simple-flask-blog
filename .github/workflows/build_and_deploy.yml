@@ -1,0 +1,59 @@
+name: Build and deploy
+
+on:
+  push:
+    branches:
+      - main
+      - reuse_workflow
+    paths:
+      - posts/**
+      - Dockerfile
+      - .dockerignore
+      - static/**
+      - templates/**
+      - requirements.txt
+      - app.py
+  pull_request:
+    branches: ["main"]
+    paths:
+      - posts/**
+      - Dockerfile
+      - .dockerignore
+      - static/**
+      - templates/**
+      - requirements.txt
+      - app.py
+jobs:
+  terraform-verify:
+    uses: ./.github/workflows/terraform.yml
+    with:
+      working_directory: ./terraform-main
+    secrets: inherit
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build the Docker image
+        run: docker build . --file Dockerfile --tag dec3ntraliz3d/blog:latest
+      - name: Log in to Docker Hub
+        run: docker login --username ${{ secrets.DOCKER_HUB_USERNAME }} --password ${{ secrets.DOCKER_HUB_PASSWORD }}
+      - name: Push the Docker image to Docker Hub
+        run: docker push dec3ntraliz3d/blog:latest
+  deploy:
+    needs: terraform-verify
+    runs-on: ubuntu-latest
+    steps:    
+      - name: SSH to EC2 and Deploy new docker container
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{needs.terraform-verify.outputs.ec2_public_ip}}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.PRIVATE_KEY }}
+          script: |
+            if [ "$(docker ps -q -f name=blog)" ]; then
+              docker stop blog
+            fi
+            docker rm blog
+            docker images | grep dec3ntraliz3d/blog | awk '{print $3}' | xargs docker rmi -f
+            docker run -d -p 80:5000 --name "blog" dec3ntraliz3d/blog:latest
+
