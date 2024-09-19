@@ -2,7 +2,7 @@ name: Terraform Main
 
 on:
   push:
-    paths: '**.tf'
+    # paths: '**.tf'
     branches:
       - main
       - reuse_workflow
