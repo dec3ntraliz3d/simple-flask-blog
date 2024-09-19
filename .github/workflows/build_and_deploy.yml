@@ -25,6 +25,10 @@ on:
       - app.py
 jobs:
   terraform-verify:
+    permissions:
+  # This is required for requesting the JWT for connecting to aws.
+      id-token: write
+      contents: read
     uses: ./.github/workflows/terraform.yml
     with:
       working_directory: ./terraform-main
