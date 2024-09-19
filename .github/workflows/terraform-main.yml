@@ -19,6 +19,5 @@ jobs:
     uses: ./.github/workflows/terraform.yml
     with:
       working_directory : ./terraform-main
-    secrets:
-      AWS_ROLE_TO_ASSUME : ${{secrets.AWS_ROLE_TO_ASSUME}}
-      PUBLIC_KEY : ${{secrets.PUBLIC_KEY}}
+    secrets: inherit
+      
